@@ -10,6 +10,7 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
+import android.widget.FrameLayout
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
@@ -21,7 +22,7 @@ import androidx.core.widget.addTextChangedListener
     CREATED BY @PEDROFSN
 */
 
-class PasswordMyBalls : LinearLayout {
+class PasswordMyBalls : FrameLayout {
 
     private lateinit var editText: EditText
     private lateinit var linearLayout: LinearLayout
