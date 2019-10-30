@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">passwordmyballs</string>
+    <string name="digits">0123456789</string>
+</resources>
