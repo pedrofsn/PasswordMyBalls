@@ -4,6 +4,8 @@
     <declare-styleable name="PasswordMyBalls">
 
         <attr name="balls" format="integer" />
+        <attr name="drawableFilled" format="integer" />
+        <attr name="drawableEmpty" format="integer" />
 
     </declare-styleable>
 

@@ -2,9 +2,9 @@ package br.com.redcode.pedrofsn.passwordmyballs
 
 import android.annotation.SuppressLint
 import android.content.Context
+import android.content.res.TypedArray
 import android.text.InputFilter
 import android.util.AttributeSet
-import android.view.KeyEvent
 import android.view.MotionEvent
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
@@ -24,18 +24,24 @@ class PasswordMyBalls : LinearLayout {
 
     private lateinit var editText: EditText
     private lateinit var linearLayout: LinearLayout
+    private lateinit var typedArray: TypedArray
 
     private var listenerFillPassword: ((String) -> Unit)? = null
     private val balls = arrayListOf<ImageView>()
-    private val defaultCount = 6
-    private var count: Int = defaultCount
 
-    fun onPasswordInputted(callback: (String) -> Unit) {
-        this.listenerFillPassword = callback
+    private val filled by lazy {
+        val default = R.drawable.ball_with_data
+        val resource = typedArray.getInt(R.styleable.PasswordMyBalls_drawableFilled, default)
+        return@lazy ContextCompat.getDrawable(context, resource)
     }
 
-    private val filled by lazy { ContextCompat.getDrawable(context, R.drawable.ball_with_data) }
-    private val empty by lazy { ContextCompat.getDrawable(context, R.drawable.ball_without_data) }
+    private val empty by lazy {
+        val default = R.drawable.ball_without_data
+        val resource = typedArray.getInt(R.styleable.PasswordMyBalls_drawableEmpty, default)
+        return@lazy ContextCompat.getDrawable(context, resource)
+    }
+
+    private val count by lazy { typedArray.getInt(R.styleable.PasswordMyBalls_balls, 6) }
 
     constructor(context: Context) : super(context) {
         initView(context, null)
@@ -63,11 +69,9 @@ class PasswordMyBalls : LinearLayout {
         linearLayout = view.findViewById(R.id.linearLayout)
 
         // Get attributes from XML
-        val typedArray = context.obtainStyledAttributes(attrs, R.styleable.PasswordMyBalls)
-        count = typedArray.getInt(R.styleable.PasswordMyBalls_balls, defaultCount)
+        typedArray = context.obtainStyledAttributes(attrs, R.styleable.PasswordMyBalls)
 
-        editText.addTextChangedListener { onTextChanged() }
-
+        watchText()
         setMaxInput(count)
         setupBalls()
         requestFocusInFirstEditText()
@@ -77,7 +81,7 @@ class PasswordMyBalls : LinearLayout {
         typedArray.recycle()
     }
 
-    private fun onTextChanged() {
+    private fun refreshBalls() {
         val input = editText.getString()
         val length = input.length
 
@@ -94,13 +98,14 @@ class PasswordMyBalls : LinearLayout {
         }
 
         if (length == count) {
-            handlePassword()
+            handlePassword(input, count)
         }
     }
 
-    private fun handleEnterKeyboard() = editText.handleEnterKeyboard { handlePassword() }
-
     private fun setupBalls() {
+        // this call it's just to instance by lazyload
+        filled
+
         for (index in 0 until count) {
             val imageView = ImageView(context)
             imageView.minimumWidth = 50
@@ -126,6 +131,10 @@ class PasswordMyBalls : LinearLayout {
         editText.filters += InputFilter.LengthFilter(count)
     }
 
+    fun onPasswordInputted(callback: (String) -> Unit) {
+        this.listenerFillPassword = callback
+    }
+
     @SuppressLint("ClickableViewAccessibility")
     private fun guideCursor() {
         editText.setOnTouchListener { _, motionEvent ->
@@ -145,35 +154,17 @@ class PasswordMyBalls : LinearLayout {
         requestFocusInFirstEditText()
     }
 
-    private fun handlePassword() {
-        val input = editText.getString()
-        if (count == input.length) {
+    private fun handlePassword(input: String = editText.getString(), length: Int = input.length) {
+        if (count == length) {
             listenerFillPassword?.invoke(input)
         }
     }
 
-    fun hideKeyboard() = editText.hideKeyboard()
 
-    fun requestFocusInFirstEditText() {
+    private fun requestFocusInFirstEditText() {
         editText.requestFocus()
-
-        (context?.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-            ?.showSoftInput(editText, InputMethodManager.SHOW_FORCED)
+        getInputManager()?.showSoftInput(editText, InputMethodManager.SHOW_FORCED)
     }
-
-    private fun EditText.handleDeleteKeyboard(function: (EditText) -> Unit) {
-        setOnKeyListener { view, keyCode, keyEvent ->
-            if (keyCode == KeyEvent.KEYCODE_DEL) {
-                val count = editableText.toString().count()
-                if (count == 0) {
-                    function.invoke(view as EditText)
-                }
-            }
-            return@setOnKeyListener false
-        }
-    }
-
-    private fun EditText.getString() = text.toString().trim()
 
     private fun EditText.handleEnterKeyboard(function: (EditText) -> Unit) =
         setOnEditorActionListener { _, actionId, _ ->
@@ -183,9 +174,15 @@ class PasswordMyBalls : LinearLayout {
             return@setOnEditorActionListener true
         }
 
-    private fun EditText.hideKeyboard() {
-        (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
-            ?.hideSoftInputFromWindow(windowToken, 0)
+
+    private fun getInputManager(): InputMethodManager? {
+        return (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
     }
+
+    fun hideKeyboard() = editText.hideKeyboard()
+    private fun watchText() = editText.addTextChangedListener { refreshBalls() }
+    private fun handleEnterKeyboard() = editText.handleEnterKeyboard { handlePassword() }
+    private fun EditText.getString() = text.toString().trim()
+    private fun EditText.hideKeyboard() = getInputManager()?.hideSoftInputFromWindow(windowToken, 0)
 
 }
