@@ -13,6 +13,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
 import androidx.core.content.ContextCompat
+import androidx.core.content.res.getDrawableOrThrow
 import androidx.core.widget.addTextChangedListener
 
 
@@ -30,15 +31,19 @@ class PasswordMyBalls : LinearLayout {
     private val balls = arrayListOf<ImageView>()
 
     private val filled by lazy {
-        val default = R.drawable.ball_with_data
-        val resource = typedArray.getInt(R.styleable.PasswordMyBalls_drawableFilled, default)
-        return@lazy ContextCompat.getDrawable(context, resource)
+        return@lazy try {
+            typedArray.getDrawableOrThrow(R.styleable.PasswordMyBalls_drawableFilled)
+        } catch (e: Exception) {
+            ContextCompat.getDrawable(context, R.drawable.ball_with_data)
+        }
     }
 
     private val empty by lazy {
-        val default = R.drawable.ball_without_data
-        val resource = typedArray.getInt(R.styleable.PasswordMyBalls_drawableEmpty, default)
-        return@lazy ContextCompat.getDrawable(context, resource)
+        return@lazy try {
+            typedArray.getDrawableOrThrow(R.styleable.PasswordMyBalls_drawableEmpty)
+        } catch (e: Exception) {
+            ContextCompat.getDrawable(context, R.drawable.ball_without_data)
+        }
     }
 
     private val count by lazy { typedArray.getInt(R.styleable.PasswordMyBalls_balls, 6) }
@@ -71,12 +76,13 @@ class PasswordMyBalls : LinearLayout {
         // Get attributes from XML
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.PasswordMyBalls)
 
+
         watchText()
         setMaxInput(count)
         setupBalls()
-        requestFocusInFirstEditText()
         guideCursor()
         handleEnterKeyboard()
+        requestFocusInFirstEditText()
 
         typedArray.recycle()
     }
