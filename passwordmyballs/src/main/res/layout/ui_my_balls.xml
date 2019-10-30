@@ -1,83 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/linearLayout"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal">
 
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@android:color/transparent"
+        android:orientation="horizontal">
+
+
+    </LinearLayout>
+
     <EditText
-        android:id="@+id/editText0"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
+        android:id="@+id/editText"
+        style="@style/BallTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:digits="@string/digits"
         android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="1"
+        android:imeOptions="actionDone"
         android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText0">
+        android:singleLine="true">
 
         <requestFocus />
     </EditText>
 
-    <EditText
-        android:id="@+id/editText1"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
-        android:digits="@string/digits"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText1" />
-
-    <EditText
-        android:id="@+id/editText2"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
-        android:digits="@string/digits"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText2" />
-
-    <EditText
-        android:id="@+id/editText3"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
-        android:digits="@string/digits"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText3" />
-
-    <EditText
-        android:id="@+id/editText4"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
-        android:digits="@string/digits"
-        android:gravity="center"
-        android:imeOptions="actionNext"
-        android:maxLength="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText4" />
-
-    <EditText
-        android:id="@+id/editText5"
-        style="@style/BallEditText"
-        android:layout_marginEnd="8dp"
-        android:digits="@string/digits"
-        android:gravity="center"
-        android:imeOptions="actionDone"
-        android:maxLength="1"
-        android:selectAllOnFocus="true"
-        android:singleLine="true"
-        android:tag="editText5" />
-
-</LinearLayout>
+</FrameLayout>

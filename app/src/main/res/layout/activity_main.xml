@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <br.com.redcode.pedrofsn.passwordmyballs.PasswordMyBallsTextView
+    <br.com.redcode.pedrofsn.passwordmyballs.PasswordMyBalls
         android:id="@+id/passwordMyBalls"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
