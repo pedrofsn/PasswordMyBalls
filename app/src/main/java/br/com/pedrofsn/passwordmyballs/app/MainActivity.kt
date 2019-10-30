@@ -11,9 +11,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        passwordMyBalls.onPasswordInputted { password ->
+        passwordMyBalls1.onPasswordInputted { password ->
             Toast.makeText(this, password, Toast.LENGTH_SHORT).show()
-            passwordMyBalls.hideKeyboard()
+            passwordMyBalls1.hideKeyboard()
+        }
+
+        passwordMyBalls2.onPasswordInputted { password ->
+            Toast.makeText(this, password, Toast.LENGTH_SHORT).show()
+            passwordMyBalls2.hideKeyboard()
         }
     }
 }
