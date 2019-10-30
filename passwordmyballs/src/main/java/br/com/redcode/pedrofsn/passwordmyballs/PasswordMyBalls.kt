@@ -76,13 +76,12 @@ class PasswordMyBalls : LinearLayout {
         // Get attributes from XML
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.PasswordMyBalls)
 
-
         watchText()
         setMaxInput(count)
         setupBalls()
         guideCursor()
         handleEnterKeyboard()
-        requestFocusInFirstEditText()
+        requestFocusInEditText()
 
         typedArray.recycle()
     }
@@ -146,28 +145,27 @@ class PasswordMyBalls : LinearLayout {
         editText.setOnTouchListener { _, motionEvent ->
             if (motionEvent.action == MotionEvent.ACTION_UP) {
                 editText.setSelection(editText.text.length)
-                requestFocusInFirstEditText()
+                requestFocusInEditText()
             }
             return@setOnTouchListener true
         }
 
         // tricky
-        linearLayout.setOnClickListener { requestFocusInFirstEditText() }
+        linearLayout.setOnClickListener { requestFocusInEditText() }
     }
 
     fun clear() {
         editText.setText("")
-        requestFocusInFirstEditText()
+        requestFocusInEditText()
     }
 
-    private fun handlePassword(input: String = editText.getString(), length: Int = input.length) {
+    private fun handlePassword(input: String = getPassword(), length: Int = input.length) {
         if (count == length) {
             listenerFillPassword?.invoke(input)
         }
     }
 
-
-    private fun requestFocusInFirstEditText() {
+    fun requestFocusInEditText() {
         editText.requestFocus()
         getInputManager()?.showSoftInput(editText, InputMethodManager.SHOW_FORCED)
     }
@@ -185,6 +183,7 @@ class PasswordMyBalls : LinearLayout {
         return (context.getSystemService(Context.INPUT_METHOD_SERVICE) as? InputMethodManager)
     }
 
+    fun getPassword() = editText.getString()
     fun hideKeyboard() = editText.hideKeyboard()
     private fun watchText() = editText.addTextChangedListener { refreshBalls() }
     private fun handleEnterKeyboard() = editText.handleEnterKeyboard { handlePassword() }
