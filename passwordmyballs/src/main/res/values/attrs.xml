@@ -6,6 +6,8 @@
         <attr name="balls" format="integer" />
         <attr name="drawableFilled" format="integer" />
         <attr name="drawableEmpty" format="integer" />
+        <attr name="marginRight" format="integer" />
+        <attr name="size" format="integer" />
 
     </declare-styleable>
 

@@ -48,6 +48,13 @@ class PasswordMyBalls : FrameLayout {
     }
 
     private val count by lazy { typedArray.getInt(R.styleable.PasswordMyBalls_balls, 6) }
+    private val marginRight by lazy {
+        typedArray.getInt(
+            R.styleable.PasswordMyBalls_marginRight,
+            25
+        )
+    }
+    private val size by lazy { typedArray.getInt(R.styleable.PasswordMyBalls_size, 50) }
 
     constructor(context: Context) : super(context) {
         initView(context, null)
@@ -109,25 +116,27 @@ class PasswordMyBalls : FrameLayout {
     }
 
     private fun setupBalls() {
-        // this call it's just to instance by lazyload
-        filled
+        filled // this call it's just to instance by lazyload
 
-        for (index in 0 until count) {
-            val imageView = ImageView(context)
-            imageView.minimumWidth = 50
-            imageView.minimumHeight = 50
-            imageView.background = empty
+        repeat(count) {
+            ImageView(context).apply {
+                with(size) {
+                    minimumWidth = this
+                    minimumHeight = this
+                }
 
-            imageView.layoutParams = getMargin()
-
-            linearLayout.addView(imageView)
-            balls.add(imageView)
+                background = empty
+                layoutParams = getMargin()
+            }.run {
+                linearLayout.addView(this)
+                balls.add(this)
+            }
+        }.also {
+            linearLayout.invalidate()
         }
-
-        linearLayout.invalidate()
     }
 
-    private fun getMargin(right: Int = 25): ViewGroup.LayoutParams {
+    private fun getMargin(right: Int = marginRight): ViewGroup.LayoutParams {
         val layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
         layoutParams.setMargins(0, 0, right, 0)
         return layoutParams
