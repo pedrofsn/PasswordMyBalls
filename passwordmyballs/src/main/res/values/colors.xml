@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="password_my_balls_ball_filled">#ff0068ff</color>
-    <color name="password_my_balls_ball_empty">@android:color/transparent</color>
+    <color name="password_my_balls_ball_empty_solid">@android:color/transparent</color>
+    <color name="password_my_balls_ball_empty_stroke">@color/password_my_balls_ball_filled</color>
 </resources>
