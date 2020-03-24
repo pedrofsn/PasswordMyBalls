@@ -2,5 +2,7 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#ff0068ff</color>
+
+    <color name="password_my_balls_ball_filled">@color/colorAccent</color>
 </resources>

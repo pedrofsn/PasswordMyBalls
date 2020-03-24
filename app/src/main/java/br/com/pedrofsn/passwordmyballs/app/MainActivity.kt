@@ -20,5 +20,10 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, password, Toast.LENGTH_SHORT).show()
             passwordMyBalls2.hideKeyboard()
         }
+
+        passwordMyBalls3.onPasswordInputted { password ->
+            Toast.makeText(this, password, Toast.LENGTH_SHORT).show()
+            passwordMyBalls3.hideKeyboard()
+        }
     }
 }

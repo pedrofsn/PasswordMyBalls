@@ -23,4 +23,13 @@
         android:layout_margin="30dp"
         app:balls="6" />
 
+    <br.com.redcode.pedrofsn.passwordmyballs.PasswordMyBalls
+        android:id="@+id/passwordMyBalls3"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        app:balls="6"
+        app:marginRight="60"
+        app:size="80" />
+
 </LinearLayout>
