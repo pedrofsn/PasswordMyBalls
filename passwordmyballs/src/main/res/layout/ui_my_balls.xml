@@ -16,7 +16,6 @@
         style="@style/BallTextView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:digits="@string/digits"
         android:gravity="center"
         android:imeOptions="actionDone"
         android:selectAllOnFocus="true"
