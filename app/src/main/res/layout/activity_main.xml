@@ -14,14 +14,16 @@
         android:layout_margin="30dp"
         app:balls="4"
         app:drawableEmpty="@drawable/ic_android_gray_24dp"
-        app:drawableFilled="@drawable/ic_android_black_24dp" />
+        app:drawableFilled="@drawable/ic_android_black_24dp"
+        app:type="ONLY_NUMBERS" />
 
     <br.com.redcode.pedrofsn.passwordmyballs.PasswordMyBalls
         android:id="@+id/passwordMyBalls2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="30dp"
-        app:balls="6" />
+        app:balls="6"
+        app:type="ANY_TEXT" />
 
     <br.com.redcode.pedrofsn.passwordmyballs.PasswordMyBalls
         android:id="@+id/passwordMyBalls3"
@@ -31,5 +33,6 @@
         app:balls="6"
         app:marginRight="60"
         app:size="80" />
+    <!--        DEFAULT IS app:type="ONLY_NUMBERS"-->
 
 </LinearLayout>
