@@ -4,6 +4,8 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.res.TypedArray
 import android.text.InputFilter
+import android.text.InputType
+import android.text.method.DigitsKeyListener
 import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.ViewGroup
@@ -85,6 +87,7 @@ class PasswordMyBalls : FrameLayout {
         typedArray = context.obtainStyledAttributes(attrs, R.styleable.PasswordMyBalls)
 
         watchText()
+        setupInput()
         setMaxInput(count)
         setupBalls()
         guideCursor()
@@ -92,6 +95,24 @@ class PasswordMyBalls : FrameLayout {
         requestFocusInEditText()
 
         typedArray.recycle()
+    }
+
+    private fun setupInput() {
+        val index = typedArray.getInt(
+            R.styleable.PasswordMyBalls_type,
+            BallType.ONLY_NUMBERS.type
+        )
+
+        when (BallType.values()[index]) {
+            BallType.ONLY_NUMBERS -> {
+                val numberDigits = context.getString(R.string.number_digits)
+                editText.inputType = InputType.TYPE_NUMBER_VARIATION_PASSWORD
+                editText.keyListener = DigitsKeyListener.getInstance(numberDigits)
+            }
+            BallType.ANY_TEXT -> {
+                editText.inputType = InputType.TYPE_TEXT_VARIATION_PASSWORD
+            }
+        }
     }
 
     private fun refreshBalls() {

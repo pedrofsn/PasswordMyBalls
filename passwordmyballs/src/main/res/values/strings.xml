@@ -1,4 +1,4 @@
 <resources>
     <string name="app_name">passwordmyballs</string>
-    <string name="digits">0123456789</string>
+    <string name="number_digits">0123456789</string>
 </resources>

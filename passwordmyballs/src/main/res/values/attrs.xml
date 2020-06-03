@@ -8,6 +8,10 @@
         <attr name="drawableEmpty" format="integer" />
         <attr name="marginRight" format="integer" />
         <attr name="size" format="integer" />
+        <attr name="type" format="enum">
+            <enum name="ONLY_NUMBERS" value="0" />
+            <enum name="ANY_TEXT" value="1" />
+        </attr>
 
     </declare-styleable>
 
